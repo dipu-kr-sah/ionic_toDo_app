@@ -1,14 +1,14 @@
 <template>
     <form @submit.prevent="addNewTask">
         <text-field placeholder="Enter your task" v-model="title"/>
-        <div class="date-pick">
-            <div>
-                start date
-            </div>
-            <div>
-                end date
-            </div>
-        </div>
+<!--        <div class="date-pick">-->
+<!--            <div>-->
+<!--                start date-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                end date-->
+<!--            </div>-->
+<!--        </div>-->
         <button type="submit">Add</button>
     </form>
 </template>
