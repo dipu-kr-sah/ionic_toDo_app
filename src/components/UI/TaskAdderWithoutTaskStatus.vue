@@ -27,6 +27,9 @@
             const title = ref("");
             const store = useStore();
             const addNewTask = () => {
+                if(!title.value){
+                    return;
+                }
                 store.dispatch("addNewTask", {
                     title: title.value,
                     completed: false
