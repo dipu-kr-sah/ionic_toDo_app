@@ -4,15 +4,30 @@
   </ion-app>
 </template>
 
-<script lang="ts">
+<script >
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { defineComponent,onBeforeMount } from 'vue';
+import { useStore } from 'vuex'
+import taskData from "./data/tasks"
+import usersData from "./data/users"
+
+
 
 export default defineComponent({
+
+
   name: 'App',
   components: {
     IonApp,
     IonRouterOutlet
+  },
+  setup(){
+    const store = useStore();
+    onBeforeMount(function () {
+      store.dispatch("stateTaskSetter",taskData);
+      store.dispatch("stateUsersSetter",usersData);
+    })
+
   }
 });
 </script>
