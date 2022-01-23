@@ -14,7 +14,7 @@ export default {
           el.startDate.getTime() +
             Math.random() * (endDate.getTime() - el.startDate.getTime())
         );
-        el.timeRequiredToCompleteInHours = (Math.random() * 10).toFixed(1);
+        el.timeRequiredToCompleteInHours = (Math.random() * 1).toFixed(1);
         return el;
       })
     );

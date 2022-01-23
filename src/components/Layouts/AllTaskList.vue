@@ -2,8 +2,7 @@
     <div v-for="(task,index) in tasks" :key="index">
         <task-viewer
                 class="cursor-pointer"
-                :title="task.title"
-                :completed="task.completed"
+                :taskDetails="task"
                 @delete="$emit('delete',index)"
                 @update:completed="updateTask(task,'completed',$event,index)"
         />
@@ -39,7 +38,7 @@
         cursor: pointer;
     }
 
-    .cursor-pointer:hover {
-        box-shadow: 1rem 1rem 1rem 1rem #c4c4c460;
-    }
+    /*.cursor-pointer:hover {*/
+    /*    box-shadow: 1rem 1rem 1rem 1rem #c4c4c460;*/
+    /*}*/
 </style>

@@ -1,14 +1,21 @@
 <template>
-    <div class="card">
+    <div class="task-viewer">
+        <div class="card">
+            <div>
+                <check-box type="checkbox" v-model="isCompeted"/>
+            </div>
+            <div class="task-title" @click="isCompeted=!isCompeted">
+                <ion-card-title>{{taskDetails.title}}</ion-card-title>
+            </div>
+            <div class="options">
+                <IonIcon class="icons" :icon="icons.trash" color='danger' @click="$emit('delete')"/>
+                <IonIcon class="icons" :icon="icons.createOutline" @click="$emit('edit')"/>
+            </div>
+
+        </div>
         <div>
-            <check-box type="checkbox" v-model="isCompeted"/>
-        </div>
-        <div class="task-title" @click="isCompeted=!isCompeted">
-            <ion-card-title>{{title}}</ion-card-title>
-        </div>
-        <div class="options">
-            <IonIcon class="icons" :icon="icons.trash"  color='danger' @click="$emit('delete')"/>
-            <IonIcon class="icons" :icon="icons.createOutline" @click="$emit('edit')"/>
+            <timer :model-value="parseFloat(taskDetails.timeRequiredToCompleteInHours)"/>
+
         </div>
     </div>
 </template>
@@ -17,19 +24,17 @@
     import {IonCardHeader, IonCardContent, IonCardTitle, IonCardSubtitle, IonCard, IonIcon} from "@ionic/vue"
     import CheckBox from "./forms/CheckBox";
     import {computed} from "vue"
-    import {trash,createOutline} from "ionicons/icons"
+    import {trash, createOutline, play} from "ionicons/icons"
+    import Timer from "./Timer";
 
     export default {
         name: "TaskViewer",
-        emits:["delete","edit","update:completed"],
+        emits: ["delete", "edit", "update:completed"],
         props: {
-            title: String,
-            completed: {
-                type: Boolean,
-                required:true
-            }
+            taskDetails: Object
         },
         components: {
+            Timer,
             CheckBox,
             IonCardHeader,
             IonCardContent,
@@ -39,9 +44,10 @@
             IonIcon
         },
         setup(props, {emit}) {
+
             let isCompeted = computed({
                 get() {
-                    return props.completed;
+                    return props.taskDetails.completed;
                 },
                 set(e) {
                     emit("update:completed", e);
@@ -49,7 +55,7 @@
             });
             return {
                 isCompeted: isCompeted,
-                icons:{trash,createOutline},
+                icons: {trash, createOutline, play},
 
             }
         }
@@ -57,6 +63,18 @@
 </script>
 
 <style scoped>
+    .task-viewer {
+        display: flex;
+        flex-direction: column;
+
+
+    }
+
+    .task-viewer:hover {
+        box-shadow: 1rem 1rem 1rem 1rem #c4c4c460;
+
+    }
+
     .card {
         border: 1px solid gray;
         display: flex;
@@ -81,8 +99,9 @@
         flex-direction: column;
         font-size: 1.3rem;
     }
-    .icons:hover{
+
+    .icons:hover {
         transition: transform 1s;
-        transform: scale(1.3,1.3);
+        transform: scale(1.3, 1.3);
     }
 </style>
