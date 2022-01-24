@@ -14,7 +14,17 @@ export default {
           el.startDate.getTime() +
             Math.random() * (endDate.getTime() - el.startDate.getTime())
         );
-        el.timeRequiredToCompleteInHours = (Math.random() * 1).toFixed(1);
+        el.timeRequired = {
+          hours: Math.ceil(Math.random() * 0),
+          minutes: Math.ceil(Math.random() * 2),
+          seconds: Math.ceil(Math.random() * 0),
+        };
+        el.timeElapsed = {
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        };
+        el.timer = null;
         return el;
       })
     );
@@ -27,6 +37,7 @@ export default {
     context.commit("pushIntoStateAllTasks", data);
   },
   deleteTaskByIndex(context, taskIndex) {
+    context.commit("pauseTimerFor", taskIndex);
     context.commit("deleteStateTaskByIndex", taskIndex);
   },
   updateTaskByTaskId(context, taskDetails) {
@@ -42,5 +53,17 @@ export default {
   sortByUsingKey(context, sortKey) {
     context.commit("sortBy", sortKey);
     // console.log(taskDetails);
+  },
+  startTimer({ commit }, index) {
+    commit("startTimerFor", index);
+  },
+  pauseTimer({ commit }, index) {
+    commit("pauseTimerFor", index);
+  },
+  stopTimer({ commit }, index) {
+    commit("stopTimerFor", index);
+  },
+  emitNotificationFor({ commit }, index) {
+    commit("pushNotification", index);
   },
 };

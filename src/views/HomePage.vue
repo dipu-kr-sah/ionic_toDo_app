@@ -9,13 +9,13 @@
                 <div class="search-bar">
                     <text-field placeholder="Search for task by task title" v-model="searchString"/>
                 </div>
-                <div class="sort-filters">
-                    <label>
-                        sort by <ion-select v-model="sortBySelected" ok-text="Okay" cancel-text="Cancel">
-                        <ion-select-option v-for="(value,key) in sortByOptions" :key="key" :value="value">{{camelCaseToNormalText(value)}}</ion-select-option>
-                    </ion-select>
-                    </label>
-                </div>
+<!--                <div class="sort-filters">-->
+<!--                    <label>-->
+<!--                        sort by <ion-select v-model="sortBySelected" ok-text="Okay" cancel-text="Cancel">-->
+<!--                        <ion-select-option v-for="(value,key) in sortByOptions" :key="key" :value="value">{{camelCaseToNormalText(value)}}</ion-select-option>-->
+<!--                    </ion-select>-->
+<!--                    </label>-->
+<!--                </div>-->
             </div>
 
             <div class="task-list-container">
@@ -33,20 +33,7 @@
     import {useStore} from "vuex"
     import TaskAdderWithoutTaskStatus from "../components/UI/TaskAdderWithoutTaskStatus";
     import {LocalNotifications} from "@capacitor/local-notifications";
-async function timerNotification() {
-    await LocalNotifications.schedule({
-        notifications:[{
-            title:"Hello world",
-            "body":"Hello",
-            extra:{
-                "extras":"Hiii"
-            },
-            id:7,
-            ongoing:true
 
-        }]
-    });
-}
     export default defineComponent({
         components: {
             IonContent,
@@ -61,10 +48,6 @@ async function timerNotification() {
             IonSelectOption
         },
         setup() {
-            onMounted(async ()=>{
-                await LocalNotifications.requestPermissions();
-                await timerNotification()
-            });
             const store = useStore();
             const searchString = ref("");
             const getStateAllTasks = computed({
@@ -75,7 +58,7 @@ async function timerNotification() {
                     tasksToRender.value = e;
                 }
             });
-            const sortByOptions = ref(Object.keys(getStateAllTasks.value[0]));
+            const sortByOptions = ref(Object.keys(getStateAllTasks.value[0]).slice(0,3));
             const sortBySelected = ref(sortByOptions.value[0]);
             const tasksToRender = ref([]);
             tasksToRender.value = getStateAllTasks.value;
@@ -87,6 +70,9 @@ async function timerNotification() {
             }
             function deleteTask(e) {
                 store.dispatch("deleteTaskByIndex", e)
+            }
+            function timerStarted(e) {
+                console.log("timerStarted")
             }
             watch(searchString, (nv) => {
                 tasksToRender.value = getStateAllTasks.value.filter((el) => {
@@ -107,7 +93,8 @@ async function timerNotification() {
                 searchString,
                 sortByOptions,
                 sortBySelected,
-                camelCaseToNormalText
+                camelCaseToNormalText,
+                timerStarted
             }
         }
     });

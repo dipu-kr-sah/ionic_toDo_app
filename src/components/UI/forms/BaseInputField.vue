@@ -1,12 +1,12 @@
 <template>
     <label>
         {{label}}
-        <input v-model="handleInput" v-bind="$attrs">
+        <input v-model="handleInput" v-bind="$attrs" ref="ip">
     </label>
 </template>
 
 <script>
-    import {computed} from "vue"
+    import {computed,ref,onMounted} from "vue"
     export default {
         name: "BaseInputField",
         props:{
@@ -16,10 +16,14 @@
             modelValue:{
                 type: undefined,
             },
+            focus:Boolean
         },
         emits:['update:modelValue'],
         setup(props,{emit}){
+            const ip=ref(null);
+            onMounted(()=>{
 
+            });
             const handleInput=computed({
                 set(e) {
                     emit('update:modelValue',e);
