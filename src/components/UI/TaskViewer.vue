@@ -1,7 +1,7 @@
 <template>
     <div class="task-viewer">
         <div class="card">
-            <div>
+            <div style="height: 100%">
                 <check-box type="checkbox" v-model="isCompeted"/>
             </div>
             <div class="task-title" @click="(!editing)?isCompeted=!isCompeted:''">
@@ -132,7 +132,7 @@
     .card {
         border: 1px solid gray;
         display: flex;
-        height: 5rem;
+        min-height: 5rem;
         border-radius: 0.5rem;
         box-sizing: border-box;
         padding: 1rem;

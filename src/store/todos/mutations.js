@@ -1,4 +1,4 @@
-import { timer, pushNotification } from "../../helpers/helperFunctions";
+import { timer } from "../../helpers/helperFunctions";
 
 export default {
   setAllTasks(state, allTasks) {
@@ -65,12 +65,12 @@ export default {
         state.allTasks[index].timeElapsed,
         state.allTasks[index].timeRequired
       );
-      await pushNotification(
-        index,
-        state.allTasks[index].title,
-        "time left" + JSON.stringify(state.allTasks[index].timeElapsed),
-        state.allTasks[index].id
-      );
+      // await pushNotification(
+      //   index,
+      //   state.allTasks[index].title,
+      //   "time left" + JSON.stringify(state.allTasks[index].timeElapsed),
+      //   state.allTasks[index].id
+      // );
       if (!isMoreTimeLeft) {
         return this.commit("pauseTimerFor", index);
       }
