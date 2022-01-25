@@ -10,7 +10,6 @@ import { defineComponent,onBeforeMount,onMounted } from 'vue';
 import { useStore } from 'vuex'
 import taskData from "./data/tasks"
 import usersData from "./data/users"
-import {BackgroundMode} from "@ionic-native/background-mode"
 
 
 export default defineComponent({
@@ -22,9 +21,6 @@ export default defineComponent({
     IonRouterOutlet
   },
   setup(){
-      onMounted(()=>{
-          BackgroundMode.enable()
-      });
     const store = useStore();
     onBeforeMount(function () {
       store.dispatch("stateTaskSetter",taskData);
